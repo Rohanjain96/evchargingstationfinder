@@ -6,14 +6,14 @@ const ChargerDetails = ({ route, navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.details}>
-        <Text numberOfLines={1} style={styles.station_name}>{station.station_name}</Text>
+        <Text numberOfLines={1} style={styles.station_name}>{station.name}</Text>
         <Text style={styles.Address}>{station.Address}</Text>
       </View>
       <View style={styles.chargerDetails}>
         <Text style={styles.chargername}>{chargerDetails.name}</Text>
         <Text>{chargerDetails.type}</Text>
         <Text>{chargerDetails.capacity}</Text>
-        <Text>{'\u20B9 '}{chargerDetails.price}/{chargerDetails.minutes}{" mins"}</Text>
+        <Text>{'\u20B9 '}{chargerDetails.cost_per_unit} cost per unit </Text>
       </View>
 
       <View style={styles.options}>
