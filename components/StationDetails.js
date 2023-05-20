@@ -3,14 +3,14 @@ import React from 'react'
 import ChargersType from './ChargersType'
 
 const StationDetails = ({ station}) => {
-    const {Address,station_name} = station
+    const {Address,name} = station
     return (
         <View style={styles.container}>
-            <Text style={styles.station_name}>{station_name}</Text>
+            <Text style={styles.station_name}>{name}</Text>
             <Text style={styles.Address}>{Address}</Text>
             <FlatList
                 horizontal={true}
-                data={station.chargers}
+                data={station.charger_type}
                 renderItem={charger => <ChargersType charger={charger} station={station}/>}
                 keyExtractor={(item) => item.name}
             />
@@ -20,7 +20,7 @@ const StationDetails = ({ station}) => {
 
 const styles = StyleSheet.create({
     container: {
-        paddingVertical: 50,
+        paddingVertical: 30,
         paddingHorizontal:20,
         borderBottomColor: "grey",
         borderBottomWidth:2
