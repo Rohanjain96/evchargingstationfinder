@@ -5,9 +5,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useIsFocused } from '@react-navigation/native'
 import { Image } from '@rneui/base'
 import { url } from '../constants/url'
-import {State}  from '../context/StateProvider'
+import { State } from '../context/StateProvider'
 
-const SplashScreen = ({navigation}) => {
+const SplashScreen = ({ navigation }) => {
   const [token, setToken] = useState(null)
   const focused = useIsFocused()
   const { setUser } = State()
@@ -17,7 +17,7 @@ const SplashScreen = ({navigation}) => {
         navigation.navigate("Home")
       }
     })
-      .catch((error) => console.error(error))
+      .catch((error) => console.log("🚀 ~ file: SplashScreen.jsx:21 ~ useEffect ~ error", error))
   }, [])
   useEffect(() => {
     AsyncStorage.getItem("jsonwebtoken").then((result) => {
@@ -26,7 +26,7 @@ const SplashScreen = ({navigation}) => {
         navigation.navigate("Home")
       }
     })
-      .catch((error) => console.error(error))
+      .catch((error) => console.log("🚀 ~ file: SplashScreen.jsx:30 ~ useEffect ~ error", error))
   }, [focused])
   useEffect(() => { if (token !== null) CheckCredentials() }, [token])
 
@@ -44,43 +44,43 @@ const SplashScreen = ({navigation}) => {
         navigation.navigate("Home")
       }
     } catch (error) {
-      console.error(error)
+      console.log("🚀 ~ file: SplashScreen.jsx:47 ~ CheckCredentials ~ error", error)
     }
   }
   return (
     <View style={styles.wrapper}>
       <Text style={styles.bigText}>A new way to find electric vehicles charging station</Text>
-      <TouchableOpacity onPress={()=>navigation.navigate("Login")} style={styles.button}>
-        <Text style={{color:"white"}}>Let's Get Started</Text>
+      <TouchableOpacity onPress={() => navigation.navigate("Login")} style={styles.button}>
+        <Text style={{ color: "white" }}>Let's Get Started</Text>
       </TouchableOpacity>
-    <Image source={require("../assets/splash.jpeg")} style={{width:300,height:250}} >
-    </Image >
+      <Image source={require("../assets/splash.jpeg")} style={{ width: 300, height: 250 }} >
+      </Image >
     </View>
   )
 }
- const styles = StyleSheet.create({
-    wrapper:{
-        flex:1,
-        justifyContent:"center",
-        alignItems: "center",
-        backgroundColor:"#121621",
-        paddingHorizontal:6
-    },
-    bigText:{
-        fontSize:25,
-        textAlign:"center",
-        color:"white"
-    },
-    button:{
-      marginTop:20,
-      borderWidth:1,
-      borderColor:"grey",
-      paddingVertical:10,
-      paddingHorizontal:15,
-      borderRadius:20,
-      marginBottom:70,
-      color:"white"
-    }
+const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#121621",
+    paddingHorizontal: 6
+  },
+  bigText: {
+    fontSize: 25,
+    textAlign: "center",
+    color: "white"
+  },
+  button: {
+    marginTop: 20,
+    borderWidth: 1,
+    borderColor: "grey",
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 20,
+    marginBottom: 70,
+    color: "white"
+  }
 
- })
+})
 export default SplashScreen

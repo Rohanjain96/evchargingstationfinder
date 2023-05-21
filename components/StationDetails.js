@@ -23,14 +23,17 @@ const styles = StyleSheet.create({
         paddingVertical: 30,
         paddingHorizontal:20,
         borderBottomColor: "grey",
-        borderBottomWidth:2
+        borderBottomWidth:2,
+        backgroundColor:'white'
     },
     station_name:{
         fontSize:20,
-        marginBottom:8
+        marginBottom:8,
+        color:"grey"
     },
     Address:{
-        marginBottom:10
+        marginBottom:10,
+        color:"grey"
     }
 });
 
