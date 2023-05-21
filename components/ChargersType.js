@@ -9,9 +9,9 @@ const ChargersType = ({ charger, station }) => {
         <TouchableOpacity onPress={() => navigation.navigate("ChargerDetails", { chargerDetails: charger.item, station: station })}>
             <View style={styles.container}>
                 <View style={styles.chargerNameBox}>
-                    <Text>Charger {charger.index + 1}</Text>
+                    <Text style={{color:"white"}}>Charger {charger.index + 1}</Text>
                     <View style={styles.available}>
-                        <Text style={{paddingTop: 0,paddingBottom: 0,}}>{charger.item.available}</Text>
+                        <Text style={{paddingTop: 0,paddingBottom: 0, color:"white"}}>{charger.item.available}</Text>
                     </View>
                 </View>
                 <View style={styles.chargerDetails}>
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     },
     chargerDetails: {
         alignItems: "center",
-        backgroundColor: "#000025"
+        backgroundColor: "lightgrey"
     },
     price: {
         marginVertical: 5,

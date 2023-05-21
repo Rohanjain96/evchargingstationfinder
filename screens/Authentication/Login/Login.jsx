@@ -155,7 +155,8 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: 38,
-    color: 'white'
+    color: 'white',
+    fontFamily:"JosefinSans-VariableFont_wght"
   },
   text:{
     fontSize: 18,

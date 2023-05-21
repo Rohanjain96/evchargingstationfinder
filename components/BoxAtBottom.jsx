@@ -1,10 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
 import AntDesign from "react-native-vector-icons/AntDesign"
 import ChargersType from './ChargersType';
 import { calculateAvailable } from '../utils/utils';
 
-const BoxAtBottom = ({ stationDetail }) => {
+const BoxAtBottom = ({ stationDetail, setSelectedStationLocation }) => {
   const getStationStatus = () => {
     let options = {
       hour12: false, hour: '2-digit',
@@ -13,6 +13,7 @@ const BoxAtBottom = ({ stationDetail }) => {
     const time = new Date().toLocaleString([],options)
     return stationDetail.open >= time && stationDetail.close<=time
   }
+
   return (
     <View style={styles.container}>
       <View style={{ flexDirection: "row" }}>
@@ -20,6 +21,9 @@ const BoxAtBottom = ({ stationDetail }) => {
       </View>
       <Text style={styles.address}>{stationDetail.Address}</Text>
       {getStationStatus?<Text style={styles.open}>Open</Text>:<Text style={styles.close}>Close</Text>}
+      <TouchableOpacity onPress={()=> setSelectedStationLocation([stationDetail.latitude,stationDetail.longiude])}>
+      <Text>Navigate</Text>
+      </TouchableOpacity>
       <Text style={{marginBottom:10}}><AntDesign name="clockcircle" color="dodgerblue"/>{` ${stationDetail.open} - ${stationDetail.close}`}</Text>
       <View>
         <View>

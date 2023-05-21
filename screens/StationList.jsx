@@ -23,13 +23,13 @@ const styles = StyleSheet.create({
       marginBottom:10
   },
   allStation:{
-    top:65,
+    top:90,
     overflow:"hidden",
     paddingVertical:20,
-    backgroundColor:"#000013",
+    backgroundColor:"white",
     borderTopLeftRadius:40,
     borderTopEndRadius:40,
-    marginBottom: 10
+    marginBottom: 70
   }
 });
 

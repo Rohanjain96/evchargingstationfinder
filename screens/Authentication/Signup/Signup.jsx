@@ -49,12 +49,10 @@ const Signup = ({ navigation }) => {
           if (data) {
             setUser({ type: "changeuser", payload: data });
             AsyncStorage.setItem("jsonwebtoken", JSON.stringify(data.token)).then(navigation.navigate("MainScreen"))
-              .catch((error) => console.error(error))
-            console.info("Successfully login")
-            console.log("data", data)
+              .catch((error) => console.log("🚀 ~ file: Signup.jsx:53 ~ onSubmit={ ~ error", error))
           }
         } catch (error) {
-          console.error(error)
+          console.log("🚀 ~ file: Signup.jsx:55 ~ onSubmit={ ~ error", error)
         }
         resetForm({
           username: "",
