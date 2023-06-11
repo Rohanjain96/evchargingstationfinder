@@ -1,8 +1,13 @@
 import { View, Text, TouchableHighlight, TouchableOpacity } from 'react-native'
 import React, { useEffect } from 'react'
 import RazorpayCheckout from 'react-native-razorpay';
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import axios from 'axios'
+import { url } from '../constants/url';
+import { State } from '../context/StateProvider';
 
-const PaymentPage = () => {
+const PaymentPage = ({ navigation }) => {
+  const {selectedDate,selectedSlot,selectedStation,setSelectedStation} = State()
   const makepayment = ()=>{
     var options = {
     description: 'Credits towards consultation',
@@ -20,12 +25,46 @@ const PaymentPage = () => {
     theme: {color: '#53a20e'}
   }
     RazorpayCheckout.open(options).then((data) => {
+
+      const bookslot = async(details) =>{
+        console.log(token)
+        try {
+          const config = {
+            headers: {
+              Authorization: token,
+            },
+          };
+          const {data} = await axios.post(`${url}api/booking/bookSlot`,{}, config)
+          
+          console.log("🚀 ~ file: Bookings.jsx:21 ~ fetchBookings ~ data", data.bookings)
+    
+          setBookings(data.bookings)
+          
+        } catch (error) {
+          console.log("🚀 ~ file: Bookings.jsx:25 ~ useEffect ~ error", error)
+        }
+      }
+      useEffect(() => {
+        AsyncStorage.getItem("jsonwebtoken").then((result) => {
+          console.log("🚀 ~ file: Bookings.jsx:34 ~ AsyncStorage.getItem ~ result", result)
+          if (result !== null) {
+            setToken(JSON.parse(result))
+          }
+        })
+          .catch((error) => console.log("🚀 ~ file: SplashScreen.jsx:30 ~ useEffect ~ error", error))
+      }, [])
+    
+      useEffect(()=>{
+        const details = {
+
+        }
+        bookslot(details)
+      },[token])
       // handle success
-      alert(`Success: ${data.razorpay_payment_id}`);
+      navigation.navigate("Bookings")
     }).catch((error) => {
       // handle failure
-      console.log(error)
-      alert(`Error: ${error.code} | ${error.description}`);
+      navigation.navigate("ShowSlots")
     })
   }
 

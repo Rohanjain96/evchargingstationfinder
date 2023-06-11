@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, View, PermissionsAndroid, Linking } from 'react-native';
+import { StyleSheet, View, PermissionsAndroid } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import MapboxGl from '@rnmapbox/maps';
-import Axios from "axios"
 import BoxAtBottom from '../components/BoxAtBottom';
-import { stationDataUrl } from '../constants/url';
-import { stations } from '../constants/constant';
+import { State } from '../context/StateProvider';
 
 // MapboxGl.setConnected(true);
 MapboxGl.setWellKnownTileServer('Mapbox')
@@ -13,11 +11,10 @@ MapboxGl.setAccessToken('pk.eyJ1Ijoicm9oYW5qYWluIiwiYSI6ImNsZ2hrd2I4aTBtZmEzY215
 
 const MapScreen = () => {
   const [fetchedStationLocations, setFetchedStationLocations] = useState([])
-  const [location, setLocation] = useState([])
   const [initialUserLocation, setInitialUserLocation] = useState([])
   const [selectedStation, setSelectedStation] = useState({})
   const [markerClicked, setMarkerClicked] = useState(false);
-  const [selectedStationLocation,setSelectedStationLocation] = useState([])
+  const {location,setLocation} = State()
   
 
   const handleMarkerPress = () => {
@@ -28,18 +25,6 @@ const MapScreen = () => {
     setSelectedStation({})
     setMarkerClicked(false);
   };
-
-  useEffect(()=>{
-    if(selectedStationLocation.length>0){
-      const openGoogleMapsDirections = (source, destination) => {
-        const directionsLink = `https://www.google.com/maps/dir/?api=1&origin=${source}&destination=${destination}`;
-        
-        Linking.openURL(directionsLink);
-      };
-      
-      openGoogleMapsDirections([location.latitude,location.longitude], [selectedStationLocation[0],selectedStationLocation[1]]);
-    }
-},[selectedStationLocation])
 
 
   useEffect(() => {
@@ -64,8 +49,6 @@ const MapScreen = () => {
     });
 
     const fetchData = async () => {
-      // const stationData = await Axios.get(stationDataUrl)
-      // filteredStationData = stationData.data.msg.filter((station) => station.charger_type.length > 0)
       setFetchedStationLocations(stations)
     }
 
@@ -116,7 +99,7 @@ const MapScreen = () => {
 
           </MapboxGl.MapView>
         }
-        {markerClicked && <BoxAtBottom stationDetail={selectedStation} setSelectedStationLocation={setSelectedStationLocation} />}
+        {markerClicked && <BoxAtBottom stationDetail={selectedStation} location={location} />}
       </View>
     </View>
   )

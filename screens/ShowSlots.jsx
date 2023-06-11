@@ -1,57 +1,36 @@
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useEffect } from 'react'
-import { Allslots } from '../constants/constant'
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, useWindowDimensions } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { TabView, SceneMap } from 'react-native-tab-view';
+import { useNavigation } from '@react-navigation/native'
+// import { Allslots } from '../constants/constant'
+import { generateSlots, giveDate } from '../utils/utils';
+import { State } from '../context/StateProvider';
 
-const filter = () => {
-  // Get the current time
-var currentTime = new Date();
-
-// Convert the current time to the desired format (e.g., "hh:mm a")
-var formattedCurrentTime = currentTime.toLocaleString('en-US', {
-  hour: 'numeric',
-  minute: '2-digit',
-  hour12: true
-});
-
-// Filter the slots based on the current time
-var filteredSlots = Allslots.map(function(slot) {
-  var filteredTimeSlots = slot.slots.filter(function(timeSlot) {
+const FirstDateSlots = ({ AllSlots }) => {
+    const navigation = useNavigation()
+    const {setSelectedDate,setSelectedSlot} = State()
     return (
-      formattedCurrentTime >= timeSlot.starting_time &&
-      formattedCurrentTime <= timeSlot.ending_time
-    );
-  });
-
-  return {
-    time: slot.time,
-    slots: filteredTimeSlots
-  };
-});
-
-// Output the filtered slots
-console.log(filteredSlots);
-
-}
-
-const ShowSlots = ({ navigation }) => {
-    useEffect(()=>{
-        filter();
-    },[])
-    return (
-        <View style={styles.container}>
-            <View style={styles.slotsContainer}>
+        <View style={styles.slotsContainer}>
+            <View style={styles.chargerType}>
+            </View>
+            {
+                AllSlots &&
                 <FlatList
-                    data={Allslots}
+                    data={AllSlots.dateslots}
                     renderItem={Allslot => {
                         return <View style={styles.timing}>
-                            <Text style={{ marginRight: 10,color:"grey" }}>{Allslot.item.time}</Text>
+                            <Text style={{ marginRight: 10, color: "grey",width:50 }}>{Allslot.item.hour}</Text>
                             <FlatList
                                 horizontal={true}
                                 data={Allslot.item.slots}
                                 renderItem={slot => {
-                                    return <TouchableOpacity onPress={() => navigation.navigate("PaymentPage")}>
+                                    return <TouchableOpacity onPress={() => {
+                                        setSelectedDate(Allslot.item.date)
+                                        setSelectedSlot([{starting_time:slot.item.starting_time,ending_time:slot.item.ending_time}])
+                                        navigation.navigate("PaymentPage")
+                                        }}>
                                         <View style={styles.slot}>
-                                            <Text style={{color:"grey"}}>{slot.item.starting_time} - {slot.item.ending_time}</Text>
+                                            <Text style={{ color: "grey", fontSize: 12 }}>{slot.item.starting_time} - {slot.item.ending_time}</Text>
                                         </View>
                                     </TouchableOpacity>
                                 }}
@@ -61,7 +40,121 @@ const ShowSlots = ({ navigation }) => {
                     }}
                     keyExtractor={(item) => item.id}
                 />
+            }
+
+        </View>
+    )
+}
+const SecondDateSlots = ({AllSlots}) => {
+    const {setSelectedDate,setSelectedSlot} = State()
+    const navigation = useNavigation()
+    return (
+        <View style={styles.slotsContainer}>
+            <View style={styles.chargerType}>
             </View>
+            {
+                AllSlots &&
+                <FlatList
+                    data={AllSlots.dateslots}
+                    renderItem={Allslot => {
+                        return <View style={styles.timing}>
+                            <Text style={{ marginRight: 10, color: "grey",width:50 }}>{Allslot.item.hour}</Text>
+                            <FlatList
+                                horizontal={true}
+                                data={Allslot.item.slots}
+                                renderItem={slot => {
+                                    return <TouchableOpacity onPress={() => {
+                                        setSelectedDate(Allslot.item.date)
+                                        setSelectedSlot([{starting_time:slot.item.starting_time,ending_time:slot.item.ending_time}])
+                                        navigation.navigate("PaymentPage")
+                                        }}>
+                                        <View style={styles.slot}>
+                                            <Text style={{ color: "grey", fontSize: 12 }}>{slot.item.starting_time} - {slot.item.ending_time}</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                }}
+                                keyExtractor={(item) => item.id}
+                            />
+                        </View>
+                    }}
+                    keyExtractor={(item) => item.id}
+                />
+            }
+
+        </View>
+    )
+}
+const ThirdDateSlots = ({AllSlots}) => {
+    const {setSelectedDate,setSelectedSlot} = State()
+    const navigation = useNavigation()
+    return (
+        <View style={styles.slotsContainer}>
+            <View style={styles.chargerType}>
+            </View>
+            {
+                AllSlots &&
+                <FlatList
+                    data={AllSlots.dateslots}
+                    renderItem={Allslot => {
+                        return <View style={styles.timing}>
+                            <Text style={{ marginRight: 10, color: "grey",width:50 }}>{Allslot.item.hour}</Text>
+                            <FlatList
+                                horizontal={true}
+                                data={Allslot.item.slots}
+                                renderItem={slot => {
+                                    return <TouchableOpacity onPress={() => {
+                                        setSelectedDate(Allslot.item.date)
+                                        setSelectedSlot([{starting_time:slot.item.starting_time,ending_time:slot.item.ending_time}])
+                                        navigation.navigate("PaymentPage")
+                                        }}>
+                                        <View style={styles.slot}>
+                                            <Text style={{ color: "grey", fontSize: 12 }}>{slot.item.starting_time} - {slot.item.ending_time}</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                }}
+                                keyExtractor={(item) => item.id}
+                            />
+                        </View>
+                    }}
+                    keyExtractor={(item) => item.id}
+                />
+            }
+
+        </View>
+    )
+}
+const ShowSlots = () => {
+    const [AllSlots, setAllSlots] = useState([])
+    useEffect(() => {
+        setAllSlots(() => generateSlots())
+    }, [])
+
+    const layout = useWindowDimensions();
+    const [index, setIndex] = React.useState(0);
+    const [routes] = React.useState([
+        { key: 'FirstDate', title: `${giveDate(0)}` },
+        { key: 'SecondDate', title: `${giveDate(1)}` },
+        { key: 'ThirdDate', title: `${giveDate(2)}` },
+    ]);
+
+
+    return (
+        <View style={styles.container}>
+            <TabView
+                navigationState={{ index, routes }}
+                renderScene={({ route }) => {
+                    switch (route.key) {
+                        case 'SecondDate':
+                            return <SecondDateSlots AllSlots={AllSlots[1]} />;
+                        case 'ThirdDate':
+                            return <ThirdDateSlots AllSlots={AllSlots[2]} />;
+                        default:
+                            return <FirstDateSlots AllSlots={AllSlots[0]} />;
+                    }
+                }}
+                onIndexChange={setIndex}
+                initialLayout={{ width: layout.width }}
+            />
         </View>
     )
 }
@@ -70,11 +163,13 @@ const styles = StyleSheet.create({
     container: {
         paddingTop: 20,
         paddingHorizontal: 15,
-        backgroundColor:"white"
+        backgroundColor: "white",
+        flex: 1
     },
     slotsContainer: {
         flexDirection: "row",
-        alignItems: "center"
+        alignItems: "center",
+        marginTop:20
     },
     timing: {
         flexDirection: "row",
@@ -83,13 +178,13 @@ const styles = StyleSheet.create({
     },
     slot: {
         marginLeft: 10,
-        width: 90,
+        width: 65,
         borderColor: "grey",
         borderWidth: 1,
         borderRadius: 10,
         paddingVertical: 7,
         alignItems: "center",
-        color:"grey"
+        color: "grey"
     },
 })
 
