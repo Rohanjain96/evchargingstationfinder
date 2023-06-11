@@ -39,6 +39,7 @@ const SplashScreen = ({ navigation }) => {
       };
       const { data } = await axios.get(`${url}api/users/checkcookie`, config)
       if (data) {
+        console.log("🚀 ~ file: SplashScreen.jsx:42 ~ CheckCredentials ~ data", data)
         setUser({ type: "changeuser", payload: data });
         setToken(null)
         navigation.navigate("Home")
