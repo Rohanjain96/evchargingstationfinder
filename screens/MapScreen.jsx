@@ -4,6 +4,7 @@ import Geolocation from 'react-native-geolocation-service';
 import MapboxGl from '@rnmapbox/maps';
 import BoxAtBottom from '../components/BoxAtBottom';
 import { State } from '../context/StateProvider';
+import { stations } from '../constants/constant';
 
 // MapboxGl.setConnected(true);
 MapboxGl.setWellKnownTileServer('Mapbox')

@@ -1,8 +1,8 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React from 'react'
+import { giveCompleteTime } from '../utils/utils';
 
 const BookingDetails = ({booking}) => {
-    console.log(booking)
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -15,15 +15,10 @@ const BookingDetails = ({booking}) => {
                 {booking.timeSlot.map((slot, index) => (
                     <View key={index} style={styles.timeSlotContainer}>
                         <Text style={styles.timeSlotText}>
-                            {slot.starting_time} - {slot.ending_time}
+                            {giveCompleteTime(slot.starting_time)} - {giveCompleteTime(slot.ending_time)}
                         </Text>
                     </View>
                 ))}
-            </View>
-
-            <View style={styles.section}>
-                <Text style={styles.sectionLabel}>Payment Mode:</Text>
-                <Text style={styles.text}>{booking.paymentMode}</Text>
             </View>
 
             <View style={styles.section}>

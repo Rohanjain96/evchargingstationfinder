@@ -1,76 +1,92 @@
 import { View, Text, TouchableHighlight, TouchableOpacity } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import RazorpayCheckout from 'react-native-razorpay';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import { url } from '../constants/url';
 import { State } from '../context/StateProvider';
+import { CommonActions, StackActions, } from '@react-navigation/native';
 
-const PaymentPage = ({ navigation }) => {
-  const {selectedDate,selectedSlot,selectedStation,setSelectedStation} = State()
-  const makepayment = ()=>{
-    var options = {
-    description: 'Credits towards consultation',
-    image: 'https://i.imgur.com/3g7nmJC.jpg',
-    currency: 'INR',
-    key: 'rzp_test_Uj71JGEydhZNLG',
-    amount: '100',
-    name: 'Acme Corp',
-    // order_id: 'order_DslnoIgkIDL8Zt',//Replace this with an order_id created using Orders API.
-    prefill: {
-      email: 'gaurav.kumar@example.com',
-      contact: '9191919191',
-      name: 'Gaurav Kumar'
-    },
-    theme: {color: '#53a20e'}
+const PaymentPage = ({ route, navigation }) => {
+  const { price } = route.params
+  const { selectedDate, selectedSlots, selectedStation, user, setSelectedSlots, setSelectedDate, setSelectedStation } = State()
+  const [token, setToken] = useState(null)
+
+  const bookslot = async (details) => {
+    try {
+      const config = {
+        headers: {
+          Authorization: token,
+        },
+      };
+
+      const { data } = await axios.post(`${url}api/booking/bookSlot`, details, config)
+      const resetAction = CommonActions.reset({
+        index: 0,
+        actions: [
+          CommonActions.navigate({ routeName: 'Bookings'})
+        ] })
+      if (data) {
+        navigation.dispatch(resetAction)
+      }
+
+    } catch (error) {
+      console.log("🚀 ~ file: PaymentPage.jsx:28 ~ bookslot ~ error", error)
+      navigation.dispatch(  
+        StackActions.replace('Home'))
+    }
   }
+
+  const makepayment = () => {
+    var options = {
+      description: 'Credits towards consultation',
+      currency: 'INR',
+      key: 'rzp_test_Uj71JGEydhZNLG',
+      amount: String(price * 100),
+      name: user.user.name,
+      prefill: {
+        email: 'gaurav.kumar@example.com',
+        contact: '9191919191',
+        name: 'Gaurav Kumar'
+      },
+      theme: { color: '#53a20e' }
+    }
+
     RazorpayCheckout.open(options).then((data) => {
 
-      const bookslot = async(details) =>{
-        console.log(token)
-        try {
-          const config = {
-            headers: {
-              Authorization: token,
-            },
-          };
-          const {data} = await axios.post(`${url}api/booking/bookSlot`,{}, config)
-          
-          console.log("🚀 ~ file: Bookings.jsx:21 ~ fetchBookings ~ data", data.bookings)
-    
-          setBookings(data.bookings)
-          
-        } catch (error) {
-          console.log("🚀 ~ file: Bookings.jsx:25 ~ useEffect ~ error", error)
-        }
+      const year = String(new Date().getFullYear())
+      const details = {
+        stationId: selectedStation.id,
+        timeSlots: selectedSlots,
+        date: `${selectedDate} ${year}`,
+        userId: user.user._id,
+        stationAddress: selectedStation.Address,
+        stationName: selectedStation.name
       }
-      useEffect(() => {
-        AsyncStorage.getItem("jsonwebtoken").then((result) => {
-          console.log("🚀 ~ file: Bookings.jsx:34 ~ AsyncStorage.getItem ~ result", result)
-          if (result !== null) {
-            setToken(JSON.parse(result))
-          }
-        })
-          .catch((error) => console.log("🚀 ~ file: SplashScreen.jsx:30 ~ useEffect ~ error", error))
-      }, [])
-    
-      useEffect(()=>{
-        const details = {
 
-        }
-        bookslot(details)
-      },[token])
+      bookslot(details)
       // handle success
-      navigation.navigate("Bookings")
+
     }).catch((error) => {
+      console.log("🚀 ~ file: PaymentPage.jsx:66 ~ RazorpayCheckout.open ~ error", error)
       // handle failure
-      navigation.navigate("ShowSlots")
+      navigation.navigate("Home")
     })
   }
 
-  useEffect(()=>{
+  useEffect(() => {
+    AsyncStorage.getItem("jsonwebtoken").then((result) => {
+      if (result !== null) {
+        setToken(JSON.parse(result))
+      }
+    })
+      .catch((error) => console.log("🚀 ~ file: PaymentPage.jsx:78 ~ useEffect ~ error", error))
+  }, [])
+
+  useEffect(() => {
     makepayment()
-  },[])
+  }, [])
+
   return (
     <View>
     </View>

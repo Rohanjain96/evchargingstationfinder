@@ -13,6 +13,9 @@ import StateProvider from './context/StateProvider';
 import ProfileScreen from './screens/UserProfile';
 import Bookings from './screens/Bookings';
 import FilterScreen from './screens/FilterScreen';
+import EditProfileScreen from './screens/EditProfileScreen';
+import ShowEstimatePriceScreen from './screens/ShowEstimatePriceScreen';
+import ChooseUnitsScreen from './screens/ChooseUnitsScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -27,7 +30,25 @@ function App(): JSX.Element {
           <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }} />
           <Stack.Screen name="FilterScreen" component={FilterScreen} options={{ headerShown: false }} />
           <Stack.Screen name="UserProfile" component={ProfileScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="Bookings" component={Bookings} options={{ headerShown: false }} />
+          <Stack.Screen name="EditProfile" component={EditProfileScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Bookings" component={Bookings} options={{
+            title: "",
+            headerShadowVisible: false,
+          }} />
+          <Stack.Screen name="ChooseUnitsScreen" component={ChooseUnitsScreen} options={{
+            title: "",
+            headerShadowVisible: false,
+            headerStyle: {
+              backgroundColor: 'chartreuse',
+            },
+          }} />
+          <Stack.Screen name="EstimatePriceScreen" component={ShowEstimatePriceScreen} options={{
+            title: "",
+            headerShadowVisible: false,
+            headerStyle: {
+              backgroundColor: 'chartreuse',
+            },
+          }} />
           <Stack.Screen name="ShowSlots" component={ShowSlots} options={{
             title: "Book a session",
             headerShadowVisible: false,
