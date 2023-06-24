@@ -21,12 +21,14 @@ const userreducer = (state, action) => {
       const [user, userdispatch] = useReducer(userreducer, userstate)
       const [location, setLocation] = useState([])
       const [selectedCharger,setSelectedCharger] = useState("")
-      const [selectedSlot,setSelectedSlot] = useState([])
+      const [selectedSlots,setSelectedSlots] = useState([])
       const [selectedDate,setSelectedDate] = useState("")
-      const [selectedStation,setSelectedStation] = useState("")
+      const [selectedStation,setSelectedStation] = useState(null)
+      const [AllSlots, setAllSlots] = useState([])
       return (
         <>
-      <StateContext.Provider value={{ user, setUser: userdispatch, location, setLocation,selectedCharger,setSelectedCharger,selectedSlot,setSelectedSlot,selectedDate,setSelectedDate,selectedStation,setSelectedStation }}>
+      <StateContext.Provider value={{ user, setUser: userdispatch, location, setLocation,selectedCharger,setSelectedCharger,
+        selectedSlots,setSelectedSlots,selectedDate,setSelectedDate,selectedStation,setSelectedStation,AllSlots, setAllSlots }}>
         {children}
       </StateContext.Provider>
     </>

@@ -1,7 +1,7 @@
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useEffect } from 'react'
-// import { stations } from '../constants/constant'
 import StationDetails from '../components/StationDetails'
+import Ionicons from "react-native-vector-icons/Ionicons"
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { filterStation } from '../utils/utils'
@@ -16,10 +16,17 @@ const StationList = () => {
   }, [filterChargerName, available])
   return (
     <View style={styles.container}>
-      <View style={styles.filter}>
-        <TouchableOpacity onPress={() => navigation.navigate("FilterScreen")}>
-          <FontAwesome5 name="filter" size={24} color="grey" />
-        </TouchableOpacity>
+      <View style={styles.optionContainer}>
+        <View style={styles.profile}>
+          <TouchableOpacity onPress={() => navigation.navigate("UserProfile")}>
+            <Ionicons name="ios-person-circle-outline" size={45} color="grey" />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.filter}>
+          <TouchableOpacity onPress={() => navigation.navigate("FilterScreen")}>
+            <FontAwesome5 name="filter" size={24} color="grey" />
+          </TouchableOpacity>
+        </View>
       </View>
       <View style={styles.allStation}>
         {
@@ -41,13 +48,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     position: 'relative'
   },
-  filter: {
-    position: 'absolute',
-    right: 30,
-    top: 30,
+
+  optionContainer:{
+    flexDirection:"row",
+    justifyContent:"space-between",
+    alignItems:"center",
+    padding:20
   },
   allStation: {
-    top: 80,
     overflow: "hidden",
     paddingVertical: 20,
     backgroundColor: "white",

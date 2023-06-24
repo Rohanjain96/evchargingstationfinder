@@ -24,7 +24,7 @@ export default function ProfileScreen({ navigation }) {
                     <View style={{ flexDirection: "row" }}>
                         <Button
                             buttonStyle={{ backgroundColor: 'green', marginTop: 10, marginBottom: 20, marginRight: 10 }}
-                            onPress={() => navigation.navigate("ProfileEditScreen")}>Edit Profile</Button>
+                            onPress={() => navigation.navigate("EditProfile")}>Edit Profile</Button>
                         <Button
                             onPress={() => AsyncStorage.removeItem("jsonwebtoken").then(() => navigation.navigate("Login")).catch((error) => { console.error(error) })}
                             buttonStyle={{ backgroundColor: 'red', marginTop: 10, marginBottom: 20, marginRight: 10 }}>Sign Out</Button>
@@ -42,6 +42,10 @@ export default function ProfileScreen({ navigation }) {
                     <View style={styles.profileItem}>
                         <Text style={styles.profileItemLabel}>Phone Number</Text>
                         <Text style={styles.profileItemText}>{user.user.phonenumber}</Text>
+                    </View>
+                    <View style={styles.profileItem}>
+                        <Text style={styles.profileItemLabel}>Pincode</Text>
+                        <Text style={styles.profileItemText}>{user.user?.pincode}</Text>
                     </View>
                 </View>
             </ScrollView>

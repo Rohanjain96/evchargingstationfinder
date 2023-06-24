@@ -8,7 +8,7 @@ import * as yup from "yup"
 import axios from 'axios'
 import { State } from '../../../context/StateProvider'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { url } from '../../../constants/urls'
+import { url } from '../../../constants/url'
 import Ionicons from "react-native-vector-icons/Ionicons"
 import Entypo from "react-native-vector-icons/Entypo"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
@@ -60,7 +60,6 @@ const Signup = ({ navigation }) => {
           password: "",
           confirmPassword: ""
         })
-        console.log(values)
       }}
     >
       {(props) => (

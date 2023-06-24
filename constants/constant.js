@@ -14,7 +14,8 @@ export const stations = [
 
         charger_type: [{
             id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb7282',
-            cost_per_unit: "15",
+            cost_per_unit: 15,
+            cost_per_min: 135,
             name: "Charger 1",
             type: "CCS-2",
             minutes: 15,
@@ -25,7 +26,8 @@ export const stations = [
             id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb3779',
             name: "Charger 2",
             type: "AC Type-2",
-            cost_per_unit: "20",
+            cost_per_unit: 20,
+            cost_per_min: 115,
             minutes: 15,
             capacity: "30KW",
             available:0
@@ -50,23 +52,26 @@ export const stations = [
             type: "AC Type-2",
             minutes: 15,
             capacity: "20KW",
-            cost_per_unit: "20",
+            cost_per_unit: 20,
+            cost_per_min: 135,
             available:2
         },
         {
-            cost_per_unit: "10",
+            cost_per_unit: 10,
             id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb2673',
             name: "Charger 2",
             type: "AC Type-2",
             minutes: 15,
+            cost_per_min: 125,
             capacity: "30KW",
             available:1
         },
         {
             id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb2y7h',
-            cost_per_unit: "30",
+            cost_per_unit: 30,
             name: "Charger 3",
             type: "CCS-2",
+            cost_per_min: 105,
             minutes: 15,
             capacity: "20KW",
             available:0
@@ -91,7 +96,8 @@ export const stations = [
         type: "CHAdeMO",
         minutes: 15,
         capacity: "20KW",
-        cost_per_unit: "15",
+        cost_per_unit: 15,
+        cost_per_min: 145,
         available:1
         },
         {
@@ -100,7 +106,8 @@ export const stations = [
             type: "AC Type-2",
             minutes: 15,
             capacity: "30KW",
-            cost_per_unit: "20",
+            cost_per_unit: 20,
+            cost_per_min: 115,
             available:1
         },
         ]
@@ -123,7 +130,8 @@ export const stations = [
             type: "CHAdeMO",
             minutes: 15,
             capacity: "20KW",
-            cost_per_unit: "20",
+            cost_per_unit: 20,
+            cost_per_min: 125,
             available:1
         },
         {
@@ -132,7 +140,8 @@ export const stations = [
             type: "CCS-2",
             minutes: 15,
             capacity: "30KW",
-            cost_per_unit: "15",
+            cost_per_unit: 15,
+            cost_per_min: 115,
             available:2
         },
         ]
@@ -155,7 +164,8 @@ export const stations = [
             type: "CHAdeMO",
             minutes: 15,
             capacity: "20KW",
-            cost_per_unit: "15",
+            cost_per_unit: 15,
+            cost_per_min: 135,
             available:6
         },
         ]
